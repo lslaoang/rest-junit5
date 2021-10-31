@@ -29,7 +29,7 @@ public class PatientRecordController {
 
     @PostMapping
     public PatientRecord createRecord(@RequestBody @Valid PatientRecord patientRecord) throws InvalidRequestException{
-        //Validation
+
         if(patientRecord == null || patientRecord.getPatientId()==null){
             throw new InvalidRequestException("Patient Record or Patient ID must not be null!");
         }else{
@@ -42,9 +42,8 @@ public class PatientRecordController {
 
         Optional<PatientRecord>  optionalPatientRecord;
 
-        //Validation
+
         if(patientRecord == null || patientRecord.getPatientId()==null || patientRecordRepository.findById(patientRecord.getPatientId()) ==  null){
-           // throw new InvalidRequestException("Patient Record or Patient ID must not be null!");
             assert patientRecord != null;
             throw new NotFoundException("Patient with ID " + patientRecord.getPatientId() + " does not exist.");
         }
