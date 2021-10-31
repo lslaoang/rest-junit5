@@ -1,14 +1,25 @@
 package io.lslaoang.restjunit5.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.*;
+
+import javax.persistence.*;
 
 @Entity
+@Table(name = "patient_record")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PatienRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long patientId;
+
+    @NonNull  private String name;
+
+    @NonNull private Integer age;
+
+    @NonNull private  String address;
+
 }
