@@ -52,8 +52,8 @@ public class PatientRecordController {
         return patientRecordRepository.save(existingPatientRecord);
     }
 
-    @DeleteMapping
-    public void deleteByPatientId(Long patientId) throws NotFoundException{
+    @DeleteMapping(value = "{patientId}")
+    public void deleteByPatientId(@PathVariable("patientId") Long patientId) throws NotFoundException{
         //Validation
         if(patientRecordRepository.findById(patientId).isEmpty()){
             throw new NotFoundException("Patient ID "+patientId +" does not exist.");
