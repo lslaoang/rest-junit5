@@ -43,11 +43,14 @@ public class PatientRecordController {
         Optional<PatientRecord>  optionalPatientRecord;
 
         //Validation
-        if(patientRecord == null || patientRecord.getPatientId()==null || patientRecordRepository.findById(patientRecord.getPatientId()) == null) {
+        if(patientRecord == null || patientRecord.getPatientId()==null || patientRecordRepository.findById(patientRecord.getPatientId()) ==  null){
            // throw new InvalidRequestException("Patient Record or Patient ID must not be null!");
+            assert patientRecord != null;
             throw new NotFoundException("Patient with ID " + patientRecord.getPatientId() + " does not exist.");
         }
         else {
+
+            patientRecordRepository.findById(patientRecord.getPatientId());
 
             optionalPatientRecord = patientRecordRepository.findById(patientRecord.getPatientId());
 
@@ -75,7 +78,7 @@ public class PatientRecordController {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public class InvalidRequestException extends RuntimeException {
+    public static class InvalidRequestException extends RuntimeException {
         public InvalidRequestException(String s) {
             super(s);
         }

@@ -15,7 +15,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -125,9 +128,9 @@ public class PatientRecordControllerTest {
         mockMvc.perform(mockRequest)
                 .andExpect(status().isBadRequest())
                 .andExpect(result ->
-                        assertTrue(result.getResolvedException() instanceof NotFoundException))
+                        assertTrue(result.getResolvedException() instanceof PatientRecordController.InvalidRequestException))
                 .andExpect(result ->
-                        assertEquals("Patient Record or Patient ID must not be null!", result.getResolvedException().getMessage()));
+                        assertEquals("PatientRecord or ID must not be null!", result.getResolvedException().getMessage()));
     }
 
     @Test
@@ -151,7 +154,6 @@ public class PatientRecordControllerTest {
                 .andExpect(result ->
                         assertTrue(result.getResolvedException() instanceof NotFoundException))
                 .andExpect(result ->
-                        assertEquals("Patient with ID 5 does not exist.", Objects.requireNonNull(result.getResolvedException()).getMessage()));
-
+                        assertEquals("Patient with ID 5 does not exist.", result.getResolvedException().getMessage()));
     }
 }
