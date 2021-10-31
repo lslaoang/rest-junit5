@@ -10,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PatienRecord {
+public class PatientRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
