@@ -28,7 +28,7 @@ public class PatientRecordController {
     }
 
     @PostMapping
-    public PatientRecord createRecord(@RequestBody @Valid PatientRecord patientRecord){
+    public PatientRecord createRecord(@RequestBody @Valid PatientRecord patientRecord) throws InvalidRequestException{
         //Validation
         if(patientRecord == null || patientRecord.getPatientId()==null){
             throw new InvalidRequestException("Patient Record or Patient ID must not be null!");
@@ -40,23 +40,29 @@ public class PatientRecordController {
     @PutMapping
     public PatientRecord updatePatientRecord(@RequestBody PatientRecord patientRecord) throws NotFoundException {
 
+        Optional<PatientRecord>  optionalPatientRecord;
+
         //Validation
-        if(patientRecord == null || patientRecord.getPatientId()==null){
-            throw new InvalidRequestException("Patient Record or Patient ID must not be null!");
-        }
-        Optional<PatientRecord> optionalPatientRecord = patientRecordRepository.findById(patientRecord.getPatientId());
-        if(optionalPatientRecord.isEmpty() || !optionalPatientRecord.isPresent()){
+        if(patientRecord == null || patientRecord.getPatientId()==null || patientRecordRepository.findById(patientRecord.getPatientId()) == null) {
+           // throw new InvalidRequestException("Patient Record or Patient ID must not be null!");
             throw new NotFoundException("Patient with ID " + patientRecord.getPatientId() + " does not exist.");
         }
         else {
-            PatientRecord existingPatientRecord = optionalPatientRecord.get();
-            existingPatientRecord.setName(patientRecord.getName());
-            existingPatientRecord.setAddress(patientRecord.getAddress());
-            existingPatientRecord.setAge(patientRecord.getAge());
 
-            return patientRecordRepository.save(existingPatientRecord);
+            optionalPatientRecord = patientRecordRepository.findById(patientRecord.getPatientId());
+
+            if (optionalPatientRecord.isPresent()) {
+
+                PatientRecord existingPatientRecord = optionalPatientRecord.get();
+                existingPatientRecord.setName(patientRecord.getName());
+                existingPatientRecord.setAddress(patientRecord.getAddress());
+                existingPatientRecord.setAge(patientRecord.getAge());
+
+                return patientRecordRepository.save(existingPatientRecord);
+            } else {
+                throw new NotFoundException("Patient with ID " + patientRecord.getPatientId() + " does not exist.");
+            }
         }
-
     }
 
     @DeleteMapping(value = "{patientId}")

@@ -15,10 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -128,7 +125,7 @@ public class PatientRecordControllerTest {
         mockMvc.perform(mockRequest)
                 .andExpect(status().isBadRequest())
                 .andExpect(result ->
-                        assertTrue(result.getResolvedException() instanceof PatientRecordController.InvalidRequestException))
+                        assertTrue(result.getResolvedException() instanceof NotFoundException))
                 .andExpect(result ->
                         assertEquals("Patient Record or Patient ID must not be null!", result.getResolvedException().getMessage()));
     }
@@ -144,7 +141,7 @@ public class PatientRecordControllerTest {
 
         Mockito.when(patientRecordRepository.findById(updatedRecord.getPatientId())).thenReturn(null);
 
-        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/patient")
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/patient")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(updatedRecord));
@@ -154,6 +151,7 @@ public class PatientRecordControllerTest {
                 .andExpect(result ->
                         assertTrue(result.getResolvedException() instanceof NotFoundException))
                 .andExpect(result ->
-                        assertEquals("Patient with ID 5 does not exist.", result.getResolvedException().getMessage()));
+                        assertEquals("Patient with ID 5 does not exist.", Objects.requireNonNull(result.getResolvedException()).getMessage()));
+
     }
 }
