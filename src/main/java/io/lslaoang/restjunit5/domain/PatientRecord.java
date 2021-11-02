@@ -22,7 +22,4 @@ public class PatientRecord {
 
     @NonNull private  String address;
 
-    @ManyToOne
-    private Diagnosis diagnosis;
-
 }
