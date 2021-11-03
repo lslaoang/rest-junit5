@@ -16,9 +16,9 @@ public class DataLoader implements CommandLineRunner {
         Doctor doctor = new Doctor();
 
         doctor.setDoctorId(001L);
-        doctor.setName("Laurel L");
-        doctor.setAge(47);
-        doctor.setAddress("Makati, Philippines");
+        doctor.setDoctorName("Laurel L");
+        doctor.setDoctorAge(47);
+        doctor.setDoctorAddress("Makati, Philippines");
 
         doctorRepository.save(doctor);
 
