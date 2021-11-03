@@ -23,7 +23,7 @@ public class DoctorController {
     @GetMapping(value = "/{doctorId}")
     public Doctor getDoctorById(@PathVariable Long doctorId) throws NotFoundException{
         if(doctorRepository.findById(doctorId).isEmpty()) {
-            throw new NotFoundException("Doctor Not Found");
+            throw new NotFoundException("Doctor " +doctorId +" Not Found");
         }
                 return doctorRepository.findById(doctorId).get();
     }
@@ -31,7 +31,7 @@ public class DoctorController {
     @DeleteMapping(value = "/{doctorId}")
     public void deleteDoctorById(@PathVariable("doctorId") Long doctorId) throws NotFoundException {
         if(doctorRepository.findById(doctorId).isEmpty()) {
-            throw new NotFoundException("Doctor Not Found");
+            throw new NotFoundException("Doctor " +doctorId +" Not Found");
         }
         doctorRepository.deleteById(doctorId);
     }
