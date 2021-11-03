@@ -6,20 +6,19 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "patient_record")
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 @Builder
-public class PatientRecord extends BaseEntity{
+public class PatientRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long patientId;
 
-    @NonNull  private String name;
-
+    @NonNull private String name;
     @NonNull private Integer age;
+    @NonNull private String address;
 
-    @NonNull private  String address;
 
 }
