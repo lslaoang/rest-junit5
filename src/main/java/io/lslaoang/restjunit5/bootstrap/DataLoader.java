@@ -3,7 +3,9 @@ package io.lslaoang.restjunit5.bootstrap;
 import io.lslaoang.restjunit5.domain.Appointment;
 import io.lslaoang.restjunit5.domain.Doctor;
 import io.lslaoang.restjunit5.domain.PatientRecord;
+import io.lslaoang.restjunit5.repository.AppointmentRepository;
 import io.lslaoang.restjunit5.repository.DoctorRepository;
+import io.lslaoang.restjunit5.repository.PatientRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -15,6 +17,10 @@ import java.util.Arrays;
 public class DataLoader implements CommandLineRunner {
     @Autowired
     DoctorRepository doctorRepository;
+    @Autowired
+    PatientRecordRepository patientRecordRepository;
+    @Autowired
+    AppointmentRepository appointmentRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -46,6 +52,7 @@ public class DataLoader implements CommandLineRunner {
 
 
         Appointment appointment = new Appointment();
+        appointment.setAppointmentId(501L);
         appointment.setDoctorInCharge(doctorRepository.getById(001L));
         appointment.setPatientRecordList(Arrays.asList(patientRecord));
         appointment.setLocation("Makati");
