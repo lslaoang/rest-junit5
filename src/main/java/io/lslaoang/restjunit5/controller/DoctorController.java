@@ -30,8 +30,8 @@ public class DoctorController {
 
     @DeleteMapping(value = "/{doctorId}")
     public void deleteDoctorById(@PathVariable("doctorId") Long doctorId) throws NotFoundException {
-        if(doctorRepository.findById(doctorId).isEmpty()) {
-            throw new NotFoundException("Doctor " +doctorId +" Not Found");
+        if (doctorRepository.findById(doctorId).isEmpty()) {
+            throw new NotFoundException("Doctor " + doctorId + " Not Found");
         }
         doctorRepository.deleteById(doctorId);
     }

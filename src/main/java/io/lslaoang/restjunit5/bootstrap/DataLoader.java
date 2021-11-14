@@ -1,10 +1,15 @@
 package io.lslaoang.restjunit5.bootstrap;
 
+import io.lslaoang.restjunit5.domain.Appointment;
 import io.lslaoang.restjunit5.domain.Doctor;
+import io.lslaoang.restjunit5.domain.PatientRecord;
 import io.lslaoang.restjunit5.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+import java.util.Arrays;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -30,5 +35,21 @@ public class DataLoader implements CommandLineRunner {
 
         doctorRepository.save(surgeon);
         System.out.println("Surgeon persisted");
+
+        PatientRecord patientRecord = new PatientRecord();
+        patientRecord.setPatientId(1001L);
+        patientRecord.setName("Mark Sam");
+        patientRecord.setAge(28);
+        patientRecord.setAddress("Mindoro");
+
+
+
+
+        Appointment appointment = new Appointment();
+        appointment.setDoctorInCharge(doctorRepository.getById(001L));
+        appointment.setPatientRecordList(Arrays.asList(patientRecord));
+        appointment.setLocation("Makati");
+        appointment.setAppointmentTime(LocalDate.now());
+
     }
 }
