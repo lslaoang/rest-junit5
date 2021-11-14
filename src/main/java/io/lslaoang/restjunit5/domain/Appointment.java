@@ -1,8 +1,10 @@
 package io.lslaoang.restjunit5.domain;
 
+import javax.persistence.Entity;
 import java.time.LocalDate;
 import java.util.List;
 
+@Entity
 public class Appointment {
 
     Doctor doctorInCharge;
