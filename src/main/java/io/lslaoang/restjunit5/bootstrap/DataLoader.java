@@ -48,6 +48,9 @@ public class DataLoader implements CommandLineRunner {
         patientRecord.setAge(28);
         patientRecord.setAddress("Mindoro");
 
+        patientRecordRepository.save(patientRecord);
+        System.out.println("Patient persisted");
+
 
 
 
@@ -57,6 +60,9 @@ public class DataLoader implements CommandLineRunner {
         appointment.setPatientRecordList(Arrays.asList(patientRecord));
         appointment.setLocation("Makati");
         appointment.setAppointmentTime(LocalDate.now());
+
+        appointmentRepository.save(appointment);
+        System.out.println("Appointment persisted");
 
     }
 }
