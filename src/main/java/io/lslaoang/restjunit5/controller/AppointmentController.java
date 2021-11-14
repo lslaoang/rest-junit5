@@ -27,26 +27,26 @@ public class AppointmentController {
     }
 
     @GetMapping(value = "/{appointmentId}")
-    public Appointment getAppointmentById(@PathVariable Long appointmentID) throws NotFoundException {
+    public Appointment getAppointmentById(@PathVariable Long appointmentId) throws NotFoundException {
 
-        if(appointmentRepository.findById(appointmentID).isEmpty()) {
-            throw new NotFoundException("Appointment " +appointmentID +" Not Found");
+        if(appointmentRepository.findById(appointmentId).isEmpty()) {
+            throw new NotFoundException("Appointment " +appointmentId +" Not Found");
         }
-        return appointmentRepository.findById(appointmentID).get();
+        return appointmentRepository.findById(appointmentId).get();
      }
 
 
     @GetMapping(value = "/doctor/{doctorId}")
-    public Appointment getAppointmentByDoctor(@PathVariable Long doctorId) throws NotFoundException {
+    public List<Appointment> getAppointmentByDoctor(@PathVariable Long doctorId) throws NotFoundException {
+
         Appointment appointment = new Appointment();
 
         if(doctorRepository.findById(doctorId).isEmpty()) {
             throw new NotFoundException("Appointment " +doctorId +" Not Found");
-        }
-        if (doctorId == appointment.getDoctorInCharge().getDoctorId()){
-            appointment =  appointmentRepository.findById(appointment.getAppointmentId()).get();
-        }
-        return appointment;
+        } else
+
+        appointment.setDoctorInCharge(doctorRepository.getById(doctorId));
+        return List.of(appointment);
     }
 
 

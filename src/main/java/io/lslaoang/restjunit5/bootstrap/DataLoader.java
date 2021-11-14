@@ -11,7 +11,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -51,13 +50,22 @@ public class DataLoader implements CommandLineRunner {
         patientRecordRepository.save(patientRecord);
         System.out.println("Patient persisted");
 
+        PatientRecord patientRecord1 = new PatientRecord();
+        patientRecord1.setPatientId(1002L);
+        patientRecord1.setName("Mary Grace");
+        patientRecord1.setAge(30);
+        patientRecord1.setAddress("Mindoro");
+
+        patientRecordRepository.save(patientRecord1);
+        System.out.println(patientRecord1 +" persisted");
+
 
 
 
         Appointment appointment = new Appointment();
         appointment.setAppointmentId(501L);
         appointment.setDoctorInCharge(doctorRepository.getById(001L));
-        appointment.setPatientRecordList(Arrays.asList(patientRecord));
+        appointment.setPatientRecordList(patientRecordRepository.findAll());
         appointment.setLocation("Makati");
         appointment.setAppointmentTime(LocalDate.now());
 
